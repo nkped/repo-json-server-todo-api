@@ -53,7 +53,7 @@ export async function PUT(request: Request) {
             'Content-Type': 'application/json',
             'API-Key': API_KEY
         },
-        body: JSON.stringify({ userId, title, completed, id })
+        body: JSON.stringify({ userId, title, completed })
     })
 
     const updatedTodo: Todo = await res.json()
