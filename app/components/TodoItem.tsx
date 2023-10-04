@@ -1,8 +1,14 @@
 import React from 'react'
+import Link from 'next/link'
+import Checkbox from './Checkbox'
 
-const TodoItem = ({todo}: Todo) => {
+
+const TodoItem = (todo: Todo) => {
   return (
-    <div>TodoItem</div>
+    <form>
+        <Link href={`http://localhost:3000/api/todos/${todo.id}`}>{todo.title}</Link>
+        <Checkbox todo={todo}/>
+    </form>
   )
 }
 
