@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { revalidatePath } from "next/cache"
 
 const DATA_RESOURCE = process.env.RESOURCE_URL as string
 const API_KEY = process.env.SECRET_KEY as string

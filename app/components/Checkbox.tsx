@@ -1,20 +1,8 @@
-'use client'
 import React from 'react'
 
-const Checkbox = ({todo,}: {todo: Todo,}) => {
-
-    const handleChange = (e: any) => {
-        e.preventDefault()
-    }
-
-
-
+const Checkbox = () => {
   return (
-    <input 
-        type='checkbox' 
-        checked={todo.completed}
-        onChange={handleChange}
-        />
+    <div>Checkbox</div>
   )
 }
 

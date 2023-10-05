@@ -1,25 +1,15 @@
 import React from 'react'
-
+import Todo from './Todo'
 import { fetchTodoList } from '@/lib/fetchTodoList'
-import TodoItem from './TodoItem'
 
 
 const TodoList = async () => {
-    const res = await fetchTodoList()
 
-    const todos: Todo[] = await res.json()
+    const todos: Todo[] = await fetchTodoList()
 
-    const content = (
-
-        <>
-            {todos.map((todo) => (
-                <TodoItem key={todo.id} {...todo} />
-
-            ))}
-        </>
-    )
-
-  return content
+  return (
+    <ul>{todos.map((todo) => (<Todo key={todo.id} todo={{...todo}}/>))}</ul>
+  )
 }
 
 export default TodoList
