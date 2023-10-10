@@ -31,7 +31,7 @@ const Homepage = () => {
 
   const addTodo = (title: string): void => {
     const id = todos[todos.length - 1].id + 1
-    const myNewTodo = { 'userId': 3, id, title, 'completed': false }
+    const myNewTodo = { userId: 3, id, title, completed: false }
     const listItems = [ ...todos, myNewTodo]
     setTodos(listItems)
   }
