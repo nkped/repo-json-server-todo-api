@@ -2,10 +2,16 @@
 import React from 'react'
 import Content from './components/Content'
 import AddTodo from './components/AddTodo'
+import apiRequests from '@/lib/apiRequests'
+
+//Find prod url when deploying
+const API_URL = 'http://localhost:3000/api/todos'
 
 import { useState, useEffect } from 'react'
 
 const Homepage = () => {
+
+  const [ fetchError, setFetchError ] = useState(null)
 
   const [ newTodo, setNewTodo ] = useState('')
 
@@ -15,12 +21,11 @@ const Homepage = () => {
   
   useEffect(() => {
     const getTodos = async () => {
-      const res = await fetch('http://localhost:3000/api/todos')
+      const res = await fetch(API_URL)
       const result= await res.json()
       setTodos(result)
     }
     getTodos()
-
   }, [])
 
 
@@ -29,11 +34,16 @@ const Homepage = () => {
     setTodos(listItems)
   } 
 
-  const addTodo = (title: string): void => {
+  const addTodo = async (title: string): Promise<any> => {
     const id = todos[todos.length - 1].id + 1
     const myNewTodo = { userId: 3, id, title, completed: false }
     const listItems = [ ...todos, myNewTodo]
     setTodos(listItems)
+
+    const postOptions = { method: 'POST', header: { 'Content-Type': 'application/json'}, body: JSON.stringify(myNewTodo)}
+
+    const result = await apiRequests(API_URL, postOptions)
+    if (result) setFetchError(result)
   }
 
   const handleSubmit = (e: any) => {
