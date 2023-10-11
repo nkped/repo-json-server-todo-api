@@ -1,18 +1,17 @@
 import React from 'react'
 
 
-const apiRequests = async ( url = '', optionsObj:RequestInit | undefined, errMsg = null ) => {
+const apiRequests = async ( url = '', optionsObj: any, errMsg = null ) => {
+// 
 
-    try {
         const res = await fetch(url, optionsObj)
-        if (!res.ok) throw new Error('Ressources could not be fetched. Please reload..')
+        console.log('optionObj and errMsg from apiReq: ', optionsObj, errMsg)
+        const result = await res.json()
+        console.log('result from apiRequest:', result)
+        
+        return result
+
     }
-    catch(err: any) {
-        errMsg = err.message
-    }
-    finally {
-        return errMsg
-    }    
-}
+
 
 export default apiRequests
