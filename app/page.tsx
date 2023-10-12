@@ -22,7 +22,6 @@ const Homepage = () => {
     const getTodos = async () => {
       const res = await fetch(API_URL)
       const result = await res.json()
-      console.log('result from page: ', result)
       setTodos(result)
     }
     getTodos()
@@ -31,23 +30,24 @@ const Homepage = () => {
 
 
 
-  const handleCheck = async (id: number): Promise<void> => {
+  const handleCheck = async (id: number) => {
     const listItems: Todo[] = todos.map((todo: Todo) => id === todo.id ? { ...todo, completed: !todo.completed} : todo )
     setTodos(listItems)
 
-    console.log(listItems)
     const updatedTodo = listItems.filter((todo) => id === todo.id )
-    console.log(updatedTodo)
+    
+    
+    console.log('updatedTodo-props from page being sent to apiReq:', id, updatedTodo[0].completed )
+    
+    const updateOptions = { method: 'PATCH', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'completed': updatedTodo[0].completed, 'id': id})
+  }
 
-    const { userId, title, completed } = updatedTodo[0]
-
-    const updateOptions = { method: 'PUT', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ userId, id, title, completed })}
-
-    const reqUrl = `${API_URL}/${id}`
-    console.log(reqUrl)
+    const reqUrl = API_URL
+    console.log('patch reqUrl from page', reqUrl)
 
     const result = await apiRequests(reqUrl, updateOptions)
-    //console.log(result)
+    
+    console.log('result from patch on page', result)
     
     //if (result) setFetchError(result)
   } 
@@ -66,6 +66,7 @@ const Homepage = () => {
     const postOptions = { method: 'POST', header: { 'Content-Type': 'application/json'}, body: JSON.stringify(myNewTodo)}
 
     const reqUrl = API_URL
+    console.log('post reqUrl from page', reqUrl)
 
     const result = await apiRequests(reqUrl, postOptions)
     //if (result) setFetchError(result)
