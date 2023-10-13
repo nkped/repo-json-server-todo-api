@@ -9,6 +9,7 @@ const API_URL = 'api/todos'
 
 import { useState, useEffect } from 'react'
 
+
 const Homepage = () => {
 
   const [ fetchError, setFetchError ] = useState(null)
@@ -17,6 +18,7 @@ const Homepage = () => {
 
   const [ todos, setTodos ] = useState<Todo[]>([])
   
+
   useEffect(() => {
     const getTodos = async () => {
       const res = await fetch(API_URL)
@@ -36,8 +38,9 @@ const Homepage = () => {
     const updatedTodo = listItems.filter((todo) => id === todo.id )   
     console.log('updatedTodo-props from page being sent to apiReq:', id, updatedTodo[0].completed )
     
-    const updateOptions = { method: 'PATCH', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'completed': updatedTodo[0].completed, 'id': id})
+    const updateOptions = { method: 'PATCH', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'completed': updatedTodo[0].completed, 'id': id })
   }
+
     const reqUrl = API_URL
     console.log('patch reqUrl from page', reqUrl)
 
@@ -55,7 +58,7 @@ const Homepage = () => {
     const listItems = [ ...todos, myNewTodo]
     setTodos(listItems)
 
-    const postOptions = { method: 'POST', header: { 'Content-Type': 'application/json'}, body: JSON.stringify(myNewTodo)}
+    const postOptions = { method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(myNewTodo)}
 
     const reqUrl = API_URL
     console.log('post reqUrl from page', reqUrl)
@@ -64,7 +67,36 @@ const Homepage = () => {
     //if (result) setFetchError(result)
     console.log('result from page: ', result)
   }
+
+
+
+
+
+
+
+
+
+  const handleDelete = async (id: number) => {
+
+    const filteredTodos = todos.filter((todo) => id !== todo.id )
+    setTodos(filteredTodos)
+
+    const reqUrl = API_URL
+
+    const deleteOptions = { method: 'DELETE', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'id': id})}
+
+    await apiRequests(reqUrl, deleteOptions)
+  }
   
+
+
+
+
+
+
+
+
+
   const handleSubmit = (e: any) => {  
     e.preventDefault()
     addTodo(newTodo)
@@ -83,6 +115,7 @@ const Homepage = () => {
         <Content 
           todos={todos}
           handleCheck={handleCheck} 
+          handleDelete={handleDelete}
           />
       </main>
     </div>

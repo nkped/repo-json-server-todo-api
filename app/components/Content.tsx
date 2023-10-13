@@ -4,7 +4,7 @@ import AddTodo from './AddTodo'
 
 
 
-const Content = ({ todos, handleCheck }: { todos: Todo[], handleCheck: (id: number) => void }) => {
+const Content = ({ todos, handleCheck, handleDelete }: { todos: Todo[], handleCheck: (id: number) => void, handleDelete: (id: number) => void }) => {
   return (
         <ul>
             {todos.map((todo) => (
@@ -15,6 +15,9 @@ const Content = ({ todos, handleCheck }: { todos: Todo[], handleCheck: (id: numb
                     onChange={() => handleCheck(todo.id)}
                     />
                 {todo.title}
+                <button 
+                onClick={() => handleDelete(todo.id) }
+                >DEL</button>
             </li>))}
         </ul>
   )

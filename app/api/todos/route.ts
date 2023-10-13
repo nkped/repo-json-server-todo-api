@@ -19,15 +19,18 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
 
     const {id}: Partial<Todo> = await request.json()
+    console.log('id from delete route:', id)
 
-    await fetch(`${DATA_RESOURCE}/${id}`, {
+    const res = await fetch(`${DATA_RESOURCE}/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         }
     })
 
-    return NextResponse.json({"message": `Todo ${id} was deleted..`})
+    const result = await res.json()
+
+    return NextResponse.json({message: `Todo ${id} was deleted, plus result from route: `, result})
 }
 
 
