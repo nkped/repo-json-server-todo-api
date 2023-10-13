@@ -16,7 +16,6 @@ const Homepage = () => {
   const [ newTodo, setNewTodo ] = useState('')
 
   const [ todos, setTodos ] = useState<Todo[]>([])
-
   
   useEffect(() => {
     const getTodos = async () => {
@@ -28,36 +27,29 @@ const Homepage = () => {
   }, [])
 
 
-
-
   const handleCheck = async (id: number) => {
+
     const listItems: Todo[] = todos.map((todo: Todo) => id === todo.id ? { ...todo, completed: !todo.completed} : todo )
+
     setTodos(listItems)
 
-    const updatedTodo = listItems.filter((todo) => id === todo.id )
-    
-    
+    const updatedTodo = listItems.filter((todo) => id === todo.id )   
     console.log('updatedTodo-props from page being sent to apiReq:', id, updatedTodo[0].completed )
     
     const updateOptions = { method: 'PATCH', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'completed': updatedTodo[0].completed, 'id': id})
   }
-
     const reqUrl = API_URL
     console.log('patch reqUrl from page', reqUrl)
 
-    const result = await apiRequests(reqUrl, updateOptions)
-    
+    const result = await apiRequests(reqUrl, updateOptions)    
     console.log('result from patch on page', result)
     
     //if (result) setFetchError(result)
+    //completed: updatedTodo[0].completed
   } 
 
-  //completed: updatedTodo[0].completed
-
-
-
-
   const addTodo = async (title: string) => {
+  
     const id = todos[todos.length - 1].id + 1
     const myNewTodo = { userId: 3, id, title, completed: false }
     const listItems = [ ...todos, myNewTodo]
@@ -73,21 +65,11 @@ const Homepage = () => {
     console.log('result from page: ', result)
   }
   
-
-
-
-
-
-
-
-
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: any) => {  
     e.preventDefault()
     addTodo(newTodo)
     setNewTodo('')
   }
-
 
     return (
     <div>
